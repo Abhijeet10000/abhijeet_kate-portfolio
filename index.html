@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Abhijeet Kate | Data Analyst Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <style>
+    :root {
+      --bg-page: #FAF8F5;
+      --bg-card: rgba(255, 255, 255, 0.88);
+      --bg-nav: rgba(255, 255, 255, 0.85);
+      --border-card: rgba(184, 134, 11, 0.15);
+      --border-accent: rgba(184, 134, 11, 0.4);
+      --text-main: #0F172A;
+      --text-muted: #64748B;
+      --accent-primary: #B8860B;
+      --accent-secondary: #059669;
+      --accent-violet: #6366F1;
+      --accent-pink: #EC4899;
+      --ease-fluid: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    html.dark {
+      --bg-page: #0D0F17;
+      --bg-card: rgba(19, 23, 34, 0.85);
+      --bg-nav: rgba(13, 15, 23, 0.85);
+      --border-card: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(212, 175, 55, 0.4);
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+      transition: background-color 0.4s var(--ease-fluid), color 0.4s var(--ease-fluid);
+    }
+
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    #ambient-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .glass-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-card);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.4s var(--ease-fluid), border-color 0.4s var(--ease-fluid), box-shadow 0.4s var(--ease-fluid), background-color 0.4s var(--ease-fluid);
+      will-change: transform;
+    }
+
+    .glass-card:hover {
+      border-color: var(--border-accent);
+      box-shadow: 0 20px 40px -15px rgba(184, 134, 11, 0.2);
+    }
+
+    .text-gradient-gold {
+      background: linear-gradient(135deg, #D4AF37 0%, #F59E0B 50%, #10B981 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* ---------------- MAKEMEPULSE TYPEWRITER ANIMATED LOGO ---------------- */
+    .mmp-logo-container {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      cursor: pointer;
+      user-select: none;
+      height: 40px;
+    }
+
+    .mmp-pulse-icon {
+      position: relative;
+      width: 26px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mmp-pulse-icon .loader-arc {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      border: 2.5px solid transparent;
+      border-top-color: var(--accent-violet);
+      border-right-color: var(--accent-pink);
+      border-radius: 50%;
+      animation: arcSpin 1.2s linear infinite, arcMorphLoop 6s infinite;
+    }
+
+    .mmp-pulse-icon .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background: linear-gradient(135deg, var(--accent-violet), var(--accent-pink));
+      border-radius: 50%;
+      box-shadow: 0 0 12px rgba(99, 102, 241, 0.8);
+      animation: dotPulseLoop 6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+    }
+
+    .mmp-logo-text {
+      font-size: 1.2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text-main);
+      display: inline-flex;
+      align-items: center;
+      white-space: nowrap;
+    }
+
+    #typewriter-text {
+      display: inline-block;
+    }
+
+    .typewriter-cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.1em;
+      background-color: var(--accent-pink);
+      margin-left: 2px;
+      animation: blink 0.7s infinite;
+      vertical-align: middle;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    @keyframes arcSpin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes arcMorphLoop {
+      0% { opacity: 1; transform: scale(1) rotate(0deg); }
+      18% { opacity: 1; transform: scale(1) rotate(280deg); }
+      24% { opacity: 0; transform: scale(0.3) rotate(360deg); }
+      82% { opacity: 0; transform: scale(0.3); }
+      90% { opacity: 1; transform: scale(1); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes dotPulseLoop {
+      0% { transform: scale(0); opacity: 0; }
+      18% { transform: scale(0); opacity: 0; }
+      24% { transform: scale(1.4); opacity: 1; box-shadow: 0 0 16px var(--accent-violet); }
+      30% { transform: scale(1); box-shadow: 0 0 8px var(--accent-violet); }
+      80% { transform: scale(1); opacity: 1; }
+      86% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(0); opacity: 0; }
+    }
+
+    @keyframes floatGentle {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(0.5deg); }
+    }
+
+    .animate-float {
+      animation: floatGentle 6s ease-in-out infinite;
+    }
+
+    .skill-progress-bar {
+      transition: width 1.2s var(--ease-fluid);
+    }
+    /* Profile Image Lightbox Modal Styles */
+#image-modal {
+  display: none;
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+#image-modal.active {
+  display: flex;
+  opacity: 1;
+}
+
+#image-modal img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 1rem;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  transform: scale(0.95);
+  transition: transform 0.3s ease;
+}
+
+#image-modal.active img {
+  transform: scale(1);
+}
+  </style>
+</head>
+<body class="relative min-h-screen">
+
+  <canvas id="ambient-canvas"></canvas>
+
+  <!-- Navigation Header -->
+  <header class="sticky top-0 z-50 w-full transition-colors duration-400" style="background-color: var(--bg-nav); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-card);">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      
+      <!-- Makemepulse Animated Header Logo -->
+      <a href="#" class="mmp-logo-container" aria-label="Abhijeet Kate Portfolio">
+        <div class="mmp-pulse-icon">
+          <div class="loader-arc"></div>
+          <div class="pulse-dot"></div>
+        </div>
+        <span class="mmp-logo-text">
+          <span id="typewriter-text"></span><span class="typewriter-cursor"></span>
+        </span>
+      </a>
+
+      <!-- Desktop Nav with 'Get in Touch' and Theme Toggle side-by-side on the right -->
+      <div class="flex items-center space-x-6">
+        <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold opacity-90">
+          <a href="#about" class="hover:text-amber-600 transition-colors">About</a>
+          <a href="#skills" class="hover:text-amber-600 transition-colors">Skills & Matrix</a>
+          <a href="#projects" class="hover:text-amber-600 transition-colors">Projects</a>
+        </nav>
+
+        <div class="flex items-center space-x-3">
+          <a href="#contact" class="px-5 py-2.5 rounded-full bg-amber-600 text-white text-sm font-semibold hover:bg-amber-700 transition-all shadow-md">Get in Touch</a>
+          
+          <!-- LIGHT / DARK MODE TOGGLE BUTTON -->
+          <button id="theme-toggle" class="p-2.5 rounded-full glass-card hover:scale-110 active:scale-95 transition-all text-amber-600 dark:text-amber-400 focus:outline-none" aria-label="Toggle Theme">
+            <i data-lucide="sun" id="theme-icon-sun" class="w-5 h-5 hidden dark:block"></i>
+            <i data-lucide="moon" id="theme-icon-moon" class="w-5 h-5 block dark:hidden"></i>
+          </button>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button id="menu-toggle" class="md:hidden p-2 text-slate-800 dark:text-slate-100 focus:outline-none">
+          <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="relative z-10 max-w-7xl mx-auto px-6 pt-12 pb-24 space-y-24">
+
+    <!-- HERO SECTION -->
+    <section id="about" class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center pt-8">
+      
+      <div class="lg:col-span-7 space-y-6">
+        
+        <div class="flex flex-wrap gap-2 items-center">
+          <span class="px-3.5 py-1 rounded-full text-xs font-mono font-medium bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/30">
+            we turn data into decisions
+          </span>
+          <span class="px-3.5 py-1 rounded-full text-xs font-mono font-medium bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30">
+            insights that drive impact
+          </span>
+        </div>
+
+        <div class="space-y-2">
+          <h2 class="text-lg font-bold tracking-wider uppercase text-amber-600 dark:text-amber-400">Data Analyst & BI Specialist</h2>
+          <h1 class="text-5xl sm:text-6xl font-extrabold tracking-tight leading-tight">
+            Hi, I'm <span class="text-gradient-gold">Abhijeet Kate</span>
+          </h1>
+        </div>
+
+        <p class="text-lg opacity-80 leading-relaxed max-w-2xl">
+          Transforming complex, raw datasets into executive dashboards, predictive revenue models, and actionable business stories. Specialized in SQL window functions, Python Pandas analysis, Power BI storytelling, and ETL pipeline optimization.
+        </p>
+
+        <div class="pt-4 flex flex-wrap gap-4 items-center">
+          <a href="#projects" class="px-7 py-3.5 rounded-xl bg-amber-600 text-white font-semibold shadow-lg shadow-amber-600/20 hover:bg-amber-700 transition-all hover:scale-[1.02]">
+            Explore Case Studies
+          </a>
+          <a href="#contact" class="px-7 py-3.5 rounded-xl border border-amber-500/30 bg-amber-500/5 font-semibold hover:border-amber-500 transition-all">
+            Download Resume
+          </a>
+        </div>
+
+        <div class="pt-8 grid grid-cols-3 gap-6 border-t border-slate-500/20">
+          <div>
+            <div class="text-3xl font-extrabold font-mono">100K+</div>
+            <div class="text-xs font-semibold opacity-60 uppercase tracking-wider mt-1">Rows Processed</div>
+          </div>
+          <div>
+            <div class="text-3xl font-extrabold text-amber-600 dark:text-amber-400 font-mono">15+</div>
+            <div class="text-xs font-semibold opacity-60 uppercase tracking-wider mt-1">BI Dashboards</div>
+          </div>
+          <div>
+            <div class="text-3xl font-extrabold text-emerald-600 dark:text-emerald-400 font-mono">99.4%</div>
+            <div class="text-xs font-semibold opacity-60 uppercase tracking-wider mt-1">Data Accuracy</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Hero Visual Interactive Card -->
+      <div class="lg:col-span-5 flex justify-center">
+        <div class="glass-card rounded-3xl p-6 w-full max-w-md animate-float">
+          
+          <div class="flex items-center justify-between pb-4 border-b border-slate-500/20">
+            <div class="flex items-center gap-3">
+             <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-amber-600 to-emerald-600 p-0.5 overflow-hidden flex-shrink-0 cursor-pointer" id="profile-trigger" title="Click to view full image">
+  <img src="./images/abhieet.jpg.webp" alt="Abhijeet Kate" class="w-full h-full object-cover rounded-full">
+</div>
+              <div>
+                <h3 class="font-bold">Abhijeet Kate</h3>
+                <p class="text-xs text-amber-600 dark:text-amber-400 font-medium">Pune, Maharashtra</p>
+              </div>
+            </div>
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Open for Roles
+            </span>
+          </div>
+
+          <div class="py-6 space-y-3">
+            <div class="flex items-center justify-between text-xs font-mono opacity-60">
+              <span>SALES DROP INVESTIGATION</span>
+              <span class="text-emerald-600 dark:text-emerald-400 font-bold">+18.4% RECOVERY</span>
+            </div>
+            
+            <svg class="w-full h-32 overflow-visible" viewBox="0 0 300 100">
+              <defs>
+                <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#B8860B" stop-opacity="0.3"/>
+                  <stop offset="100%" stop-color="#B8860B" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <path d="M 0,80 Q 50,20 100,60 T 200,30 T 300,10 L 300,100 L 0,100 Z" fill="url(#chartGrad)"/>
+              <path d="M 0,80 Q 50,20 100,60 T 200,30 T 300,10" fill="none" stroke="#B8860B" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="200" cy="30" r="4" fill="#059669"/>
+              <circle cx="300" cy="10" r="5" fill="#B8860B"/>
+            </svg>
+          </div>
+
+          <div class="flex flex-wrap gap-2 pt-2">
+            <span class="px-3 py-1 rounded-lg text-xs font-semibold bg-slate-500/10">SQL CTEs</span>
+            <span class="px-3 py-1 rounded-lg text-xs font-semibold bg-slate-500/10">Power BI DAX</span>
+            <span class="px-3 py-1 rounded-lg text-xs font-semibold bg-slate-500/10">Python Pandas</span>
+            <span class="px-3 py-1 rounded-lg text-xs font-semibold bg-slate-500/10">Tableau</span>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+    <!-- Fullscreen Image Modal Popup -->
+<div id="image-modal" onclick="closeProfileModal()">
+  <img id="modal-img" src="./images/abhieet.jpg.webp" alt="Abhijeet Kate Expanded">
+</div>
+
+    <!-- SKILLS MATRIX SECTION -->
+    <section id="skills" class="space-y-8">
+      <div class="text-center max-w-2xl mx-auto space-y-2">
+        <h2 class="text-xs font-bold uppercase tracking-widest text-amber-600 dark:text-amber-400 font-mono">TECHNICAL CAPABILITIES</h2>
+        <h3 class="text-3xl font-extrabold">Data Analytics Skill Stack</h3>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <div class="glass-card rounded-2xl p-6 space-y-4">
+          <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center">
+            <i data-lucide="database" class="w-5 h-5"></i>
+          </div>
+          <h4 class="text-xl font-bold">SQL & Database Querying</h4>
+          <p class="text-sm opacity-80">Expert in complex JOINs, CTEs, Window Functions (`ROW_NUMBER`, `LEAD/LAG`), aggregation, and MySQL Server optimization.</p>
+          <div class="space-y-2 pt-2">
+            <div class="flex justify-between text-xs font-semibold"><span>Mastery</span><span>92%</span></div>
+            <div class="w-full bg-slate-500/20 h-2 rounded-full overflow-hidden">
+              <div class="bg-amber-600 h-full skill-progress-bar" style="width: 92%"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 space-y-4">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+            <i data-lucide="bar-chart-2" class="w-5 h-5"></i>
+          </div>
+          <h4 class="text-xl font-bold">Power BI & Tableau Visualization</h4>
+          <p class="text-sm opacity-80">Building intuitive data models, star-schemas, interactive DAX metrics, and automated executive dashboards.</p>
+          <div class="space-y-2 pt-2">
+            <div class="flex justify-between text-xs font-semibold"><span>Mastery</span><span>88%</span></div>
+            <div class="w-full bg-slate-500/20 h-2 rounded-full overflow-hidden">
+              <div class="bg-emerald-600 h-full skill-progress-bar" style="width: 88%"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 space-y-4">
+          <div class="w-10 h-10 rounded-xl bg-violet-500/10 text-violet-600 dark:text-violet-400 flex items-center justify-center">
+            <i data-lucide="code" class="w-5 h-5"></i>
+          </div>
+          <h4 class="text-xl font-bold">Python Data Analysis</h4>
+          <p class="text-sm opacity-80">Data cleaning with Pandas and NumPy, statistical visualizations using Seaborn/Matplotlib, and exploratory data analysis (EDA).</p>
+          <div class="space-y-2 pt-2">
+            <div class="flex justify-between text-xs font-semibold"><span>Mastery</span><span>85%</span></div>
+            <div class="w-full bg-slate-500/20 h-2 rounded-full overflow-hidden">
+              <div class="bg-violet-600 h-full skill-progress-bar" style="width: 85%"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- FEATURED PROJECTS SECTION -->
+    <section id="projects" class="space-y-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <h2 class="text-xs font-bold uppercase tracking-widest text-amber-600 dark:text-amber-400 font-mono">PORTFOLIO CASE STUDIES</h2>
+          <h3 class="text-3xl font-extrabold">Featured Analytics Projects</h3>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        
+        <div class="glass-card rounded-3xl p-8 space-y-6 flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="flex justify-between items-start">
+              <span class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-amber-500/10 text-amber-600 dark:text-amber-400">SQL + Power BI</span>
+              <i data-lucide="arrow-up-right" class="w-5 h-5 opacity-40"></i>
+            </div>
+            <h4 class="text-2xl font-bold">E-Commerce Sales Performance Dashboard</h4>
+            <p class="opacity-80 text-sm leading-relaxed">
+              Analyzed 50,000+ transaction logs using MySQL window functions to uncover regional sales bottlenecks. Built an interactive Power BI dashboard tracking MoM growth and customer lifetime value (LTV).
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-2 pt-4 border-t border-slate-500/20">
+            <span class="px-2.5 py-1 text-xs font-medium rounded bg-slate-500/10">MySQL</span>
+            <span class="px-2.5 py-1 text-xs font-medium rounded bg-slate-500/10">Power BI</span>
+            <span class="px-2.5 py-1 text-xs font-medium rounded bg-slate-500/10">DAX</span>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-3xl p-8 space-y-6 flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="flex justify-between items-start">
+              <span class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">Python + EDA</span>
+              <i data-lucide="arrow-up-right" class="w-5 h-5 opacity-40"></i>
+            </div>
+            <h4 class="text-2xl font-bold">Customer Churn Investigation & Retention Model</h4>
+            <p class="opacity-80 text-sm leading-relaxed">
+              Performed Exploratory Data Analysis (EDA) on telecommunication customer records in Jupyter Notebook. Identified key churn indicators and proposed targeted retention strategies that improved retention estimates by 14%.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-2 pt-4 border-t border-slate-500/20">
+            <span class="px-2.5 py-1 text-xs font-medium rounded bg-slate-500/10">Python</span>
+            <span class="px-2.5 py-1 text-xs font-medium rounded bg-slate-500/10">Pandas</span>
+            <span class="px-2.5 py-1 text-xs font-medium rounded bg-slate-500/10">Seaborn</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <!-- NOTES UPLOAD SECTION -->
+<!-- MULTI-FORMAT KNOWLEDGE & NOTES REPOSITORY -->
+<section id="notes-repository" class="space-y-8">
+  <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+    <div>
+      <h2 class="text-xs font-bold uppercase tracking-widest text-amber-600 dark:text-amber-400 font-mono">KNOWLEDGE REPOSITORY</h2>
+      <h3 class="text-3xl font-extrabold">Data Analyst Notes & Code Files</h3>
+    </div>
+    <span class="px-3.5 py-1 rounded-full text-xs font-mono font-medium bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/30">
+      PDF / SQL / IPYNB / XLSX / ZIP
+    </span>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    
+    <!-- SQL File Card -->
+    <div class="glass-card rounded-2xl p-6 space-y-4 flex flex-col justify-between">
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center">
+            <i data-lucide="database" class="w-5 h-5"></i>
+          </div>
+          <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/20 text-amber-700 dark:text-amber-300">.SQL</span>
+        </div>
+        <h4 class="text-lg font-bold">Complex Window Functions Query Bank</h4>
+        <p class="text-xs opacity-80">Ready-to-run MySQL scripts covering CTEs, ranking, and LAG/LEAD time-series joins.</p>
+      </div>
+      <a href="./notes/sql-window-queries.sql" download class="inline-flex items-center justify-center gap-2 w-full py-2 rounded-xl bg-amber-600 text-white text-xs font-semibold hover:bg-amber-700 transition-all shadow-md">
+        <i data-lucide="download" class="w-3.5 h-3.5"></i> Download .SQL
+      </a>
+    </div>
+
+    <!-- Jupyter Notebook (.ipynb) Card -->
+    <div class="glass-card rounded-2xl p-6 space-y-4 flex flex-col justify-between">
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+            <i data-lucide="code" class="w-5 h-5"></i>
+          </div>
+          <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-700 dark:text-emerald-300">.IPYNB</span>
+        </div>
+        <h4 class="text-lg font-bold">Pandas Data Cleaning Master Notebook</h4>
+        <p class="text-xs opacity-80">Interactive Jupyter notebook showing EDA workflows, missing data imputation, and merging.</p>
+      </div>
+      <a href="./notes/pandas-data-cleaning.ipynb" download class="inline-flex items-center justify-center gap-2 w-full py-2 rounded-xl bg-amber-600 text-white text-xs font-semibold hover:bg-amber-700 transition-all shadow-md">
+        <i data-lucide="download" class="w-3.5 h-3.5"></i> Download .IPYNB
+      </a>
+    </div>
+
+    <!-- Excel / CSV Dataset Card -->
+    <div class="glass-card rounded-2xl p-6 space-y-4 flex flex-col justify-between">
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+            <i data-lucide="sheet" class="w-5 h-5"></i>
+          </div>
+          <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-700 dark:text-emerald-300">.XLSX</span>
+        </div>
+        <h4 class="text-lg font-bold">E-Commerce Metrics Financial Model</h4>
+        <p class="text-xs opacity-80">Sample dataset with pre-built Excel pivot tables, VLOOKUP models, and KPI charts.</p>
+      </div>
+      <a href="./notes/ecommerce-financial-model.xlsx" download class="inline-flex items-center justify-center gap-2 w-full py-2 rounded-xl bg-amber-600 text-white text-xs font-semibold hover:bg-amber-700 transition-all shadow-md">
+        <i data-lucide="download" class="w-3.5 h-3.5"></i> Download .XLSX
+      </a>
+    </div>
+
+    <!-- PDF Document Card -->
+    <div class="glass-card rounded-2xl p-6 space-y-4 flex flex-col justify-between">
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <div class="w-10 h-10 rounded-xl bg-violet-500/10 text-violet-600 dark:text-violet-400 flex items-center justify-center">
+            <i data-lucide="file-text" class="w-5 h-5"></i>
+          </div>
+          <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-violet-500/20 text-violet-700 dark:text-violet-300">.PDF</span>
+        </div>
+        <h4 class="text-lg font-bold">DAX & Power BI Architecture Cheatsheet</h4>
+        <p class="text-xs opacity-80">Printable PDF reference sheet for DAX formulas, filter context rules, and star-schemas.</p>
+      </div>
+      <a href="./notes/powerbi-dax-cheatsheet.pdf" download class="inline-flex items-center justify-center gap-2 w-full py-2 rounded-xl bg-amber-600 text-white text-xs font-semibold hover:bg-amber-700 transition-all shadow-md">
+        <i data-lucide="download" class="w-3.5 h-3.5"></i> Download .PDF
+      </a>
+    </div>
+
+  </div>
+</section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="glass-card rounded-3xl p-8 md:p-12 text-center space-y-6">
+      <h2 class="text-xs font-bold uppercase tracking-widest text-amber-600 dark:text-amber-400 font-mono">LET'S CONNECT</h2>
+      <h3 class="text-4xl font-extrabold">Ready to unlock value from your data?</h3>
+      <p class="opacity-80 max-w-xl mx-auto text-sm md:text-base">
+        I am currently seeking entry-level Data Analyst positions in Pune or remote opportunities. Feel free to reach out for project collaborations or hiring opportunities.
+      </p>
+      
+      <div class="flex flex-wrap justify-center gap-6 pt-4">
+        <a href="mailto:abhijeetkate@example.com" class="px-8 py-3.5 rounded-xl bg-amber-600 text-white font-semibold hover:bg-amber-700 transition-all shadow-md flex items-center gap-2">
+          <i data-lucide="mail" class="w-4 h-4"></i> Contact Abhijeet
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="border-t border-slate-500/20 py-8 text-center text-xs opacity-60 font-mono">
+    &copy; 2026 Abhijeet Kate. Built with custom HTML/CSS & Use of AI.
+  </footer>
+
+  <script>
+    lucide.createIcons();
+
+    // ---------------- LIGHT / DARK THEME TOGGLE ----------------
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const htmlEl = document.documentElement;
+
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    if (savedTheme === 'dark') {
+      htmlEl.classList.add('dark');
+    } else {
+      htmlEl.classList.remove('dark');
+    }
+
+    themeToggleBtn.addEventListener('click', () => {
+      if (htmlEl.classList.contains('dark')) {
+        htmlEl.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      } else {
+        htmlEl.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      }
+    });
+
+    // ---------------- MAKEMEPULSE TYPEWRITER EFFECT ----------------
+    const brandName = "abhijeet.analytics";
+    const typewriterEl = document.getElementById("typewriter-text");
+    let charIndex = 0;
+    let isDeleting = false;
+
+    function runTypewriterCycle() {
+      if (!isDeleting && charIndex <= brandName.length) {
+        typewriterEl.textContent = brandName.substring(0, charIndex);
+        charIndex++;
+        
+        if (charIndex > brandName.length) {
+          setTimeout(() => { isDeleting = true; runTypewriterCycle(); }, 2200);
+          return;
+        }
+        setTimeout(runTypewriterCycle, 75);
+      } else if (isDeleting && charIndex >= 0) {
+        typewriterEl.textContent = brandName.substring(0, charIndex);
+        charIndex--;
+
+        if (charIndex < 0) {
+          isDeleting = false;
+          charIndex = 0;
+          setTimeout(runTypewriterCycle, 1200);
+          return;
+        }
+        setTimeout(runTypewriterCycle, 45);
+      }
+    }
+
+    setTimeout(runTypewriterCycle, 800);
+
+    // ---------------- AMBIENT CANVAS PARTICLES ----------------
+    const canvas = document.getElementById('ambient-canvas');
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    const particles = Array.from({ length: 25 }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      r: Math.random() * 2 + 1,
+      dx: (Math.random() - 0.5) * 0.4,
+      dy: (Math.random() - 0.5) * 0.4
+    }));
+
+    function drawParticles() {
+      ctx.clearRect(0, 0, width, height);
+      
+      const isDark = htmlEl.classList.contains('dark');
+      ctx.fillStyle = isDark ? 'rgba(212, 175, 55, 0.25)' : 'rgba(184, 134, 11, 0.15)';
+      
+      particles.forEach(p => {
+        p.x += p.dx;
+        p.y += p.dy;
+        if (p.x < 0 || p.x > width) p.dx *= -1;
+        if (p.y < 0 || p.y > height) p.dy *= -1;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      requestAnimationFrame(drawParticles);
+    }
+    drawParticles();
+    // ---------------- PROFILE IMAGE POPUP MODAL ----------------
+const profileTrigger = document.getElementById('profile-trigger');
+const imageModal = document.getElementById('image-modal');
+
+if (profileTrigger && imageModal) {
+  profileTrigger.addEventListener('click', () => {
+    imageModal.classList.add('active');
+  });
+}
+
+function closeProfileModal() {
+  imageModal.classList.remove('active');
+}
+  </script>
+
+</body>
+</html>
