@@ -702,6 +702,88 @@ if (profileTrigger && imageModal) {
 function closeProfileModal() {
   imageModal.classList.remove('active');
 }
+    <!-- ANIMATED VISITOR WELCOME POPUP MODAL -->
+<div id="visitor-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-500">
+  <div class="glass-card rounded-3xl p-8 max-w-md w-full mx-4 space-y-6 transform scale-95 transition-transform duration-500 shadow-2xl border border-amber-500/30" style="background: var(--bg-card);">
+    
+    <div class="space-y-2 text-center">
+      <div class="w-12 h-12 mx-auto rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center">
+        <i data-lucide="sparkles" class="w-6 h-6"></i>
+      </div>
+      <h3 class="text-2xl font-extrabold text-gradient-gold">Welcome to My Portfolio</h3>
+      <p class="text-xs opacity-80">Please introduce yourself so I know who is visiting!</p>
+    </div>
+
+    <form id="visitor-form" class="space-y-4">
+      <div>
+        <label class="block text-xs font-semibold uppercase tracking-wider mb-1 opacity-80">Your Name</label>
+        <input type="text" id="visitor-name" required placeholder="e.g. Alex Smith" class="w-full px-4 py-3 rounded-xl bg-slate-500/10 border border-slate-500/20 focus:border-amber-500 focus:outline-none text-sm transition-all">
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold uppercase tracking-wider mb-1 opacity-80">Who are you?</label>
+        <select id="visitor-type" required class="w-full px-4 py-3 rounded-xl bg-slate-500/10 border border-slate-500/20 focus:border-amber-500 focus:outline-none text-sm transition-all">
+          <option value="" disabled selected>Select your relation...</option>
+          <option value="Recruiter / Company">Company / Recruiter</option>
+          <option value="Friend">Friend</option>
+          <option value="Family">Family</option>
+          <option value="Normal Visitor">Normal Visitor</option>
+        </select>
+      </div>
+
+      <button type="submit" class="w-full py-3.5 rounded-xl bg-amber-600 text-white font-semibold hover:bg-amber-700 transition-all shadow-lg shadow-amber-600/20 flex items-center justify-center gap-2 text-sm">
+        <span>Enter Portfolio</span> <i data-lucide="arrow-right" class="w-4 h-4"></i>
+      </button>
+    </form>
+
+  </div>
+</div>
+    // ---------------- ANIMATED VISITOR POPUP LOGIC ----------------
+document.addEventListener("DOMContentLoaded", () => {
+  const visitorModal = document.getElementById("visitor-modal");
+  const visitorForm = document.getElementById("visitor-form");
+
+  // Check if visitor has already been asked
+  const hasVisitedBefore = localStorage.getItem("abhijeet_portfolio_visited");
+
+  if (!hasVisitedBefore) {
+    // Show modal smoothly after 1 second delay
+    setTimeout(() => {
+      visitorModal.classList.remove("opacity-0", "pointer-events-none");
+      visitorModal.querySelector("div").classList.remove("scale-95");
+      visitorModal.querySelector("div").classList.add("scale-100");
+    }, 1000);
+  }
+
+  visitorForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const name = document.getElementById("visitor-name").value.trim();
+    const visitorType = document.getElementById("visitor-type").value;
+
+    if (!name || !visitorType) return;
+
+    // Save state locally so they are not asked again
+    localStorage.setItem("abhijeet_portfolio_visited", "true");
+
+    // Close modal smoothly with animation
+    visitorModal.classList.add("opacity-0", "pointer-events-none");
+    visitorModal.querySelector("div").classList.remove("scale-100");
+    visitorModal.querySelector("div").classList.add("scale-95");
+
+    // Send data to Python backend to store in MySQL with timestamp
+    try {
+      await fetch("http://localhost:8000/api/visitor", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ name: name, visitor_type: visitorType })
+      });
+    } catch (error) {
+      console.error("Failed to log visitor data:", error);
+    }
+  });
+});
   </script>
 
 </body>
